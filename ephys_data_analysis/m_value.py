@@ -1,4 +1,4 @@
-
+__author__ = "Olivia Haas"
 
 def m_val(gauss1, gauss2, x, x_doublePointNum, run_direc, su):
     mg1 = max(gauss1)
