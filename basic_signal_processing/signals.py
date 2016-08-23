@@ -4,7 +4,7 @@ signale.signals
 
 A module for signal classes.
 """
-__author__ = ("KT")
+__author__ = ("KT", "Olivia Haas")
 __version__ = "4.2.2, August 2014"
 
 
