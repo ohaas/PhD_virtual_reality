@@ -5,7 +5,7 @@ signale.spikes
 A module for spikes.
 """
 
-__author__ = ("KT", "Alireza Chenani", "Franziska Hellmundt", "Christian Leibold")
+__author__ = ("KT", "Olivia Haas", "Alireza Chenani", "Franziska Hellmundt", "Christian Leibold")
 __version__ = "5.1.2, September 2014"
 
 
