@@ -2,7 +2,7 @@
 For deleting false hotspot events and stimuli and saving then as new events_position.traj and stimuli.tsv
 """
 
-__author__ = 'haasolivia'
+__author__ = "Olivia Haas"
 __version__ = "1.0, September 2014"
 
 # python modules
