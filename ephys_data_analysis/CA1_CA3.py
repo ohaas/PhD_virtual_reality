@@ -1,4 +1,4 @@
-__author__ = 'haasolivia'
+__author__ = "Olivia Haas"
 __version__ = "1.0, September 2015"
 
 # python modules
