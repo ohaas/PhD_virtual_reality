@@ -1333,18 +1333,30 @@ def getAllgainChangePCs(GC, mother_spiketrain):
 
     delete_elements = []
     for n in numpy.arange(len(GC)):
-        GC[n].cut_placeCells(mother_spiketrain)
-        if not hasattr(GC[n], 'pc_gain_out'):
+        if GC[n].t_middle != GC[n].t_stop:
+            GC[n].cut_placeCells(mother_spiketrain)
+            if not hasattr(GC[n], 'pc_gain_out'):
+                print 'WARNING: Gain change object deleted because trajectory.py time slice was not possible!'
+                delete_elements.append(n)
+        else:
             print 'WARNING: Gain change object deleted because trajectory.py time slice was not possible!'
             delete_elements.append(n)
         if n == len(GC)-1:
-            for d in numpy.arange(len(delete_elements)):
-                del GC[delete_elements[d]]
+            GC = numpy.delete(GC, delete_elements)
+            # for d in numpy.arange(len(delete_elements)):
+            #     del GC[delete_elements[d]]
+    return GC
 
 
 def getAllgainChangeCSCs(GC):
+
+    delete_elements = []
     for n in numpy.arange(len(GC)):
-        GC[n].cut_csc()
+        if GC[n].t_middle != GC[n].t_stop:
+            GC[n].cut_csc()
+        if n == len(GC)-1:
+            GC = numpy.delete(GC, delete_elements)
+    return GC
 
 
 def ini_plotting():
@@ -1672,6 +1684,7 @@ if __name__ == "__main__":
     pooled = True
     singleRuns = False
     rausmap = False
+    hickle_data = False
 
     for argv in sys.argv[2:]:
         if argv == 'rausmap':
@@ -1741,6 +1754,8 @@ if __name__ == "__main__":
             rate = True
         if argv == 'wfit':
             wfit = True
+        if argv == 'hickle_data':
+            hickle_data = True
 
 
     ###################################################### initialization
@@ -1823,8 +1838,8 @@ if __name__ == "__main__":
         pc.thetaRange = (thetaRange[0], thetaRange[1])
 
         GC = getAllgainChanges(pc, transitions=transitions)
-        getAllgainChangePCs(GC=GC, mother_spiketrain=pc)
-        getAllgainChangeCSCs(GC=GC)
+        GC = getAllgainChangePCs(GC=GC, mother_spiketrain=pc)
+        GC = getAllgainChangeCSCs(GC=GC)
         ttName = stList.tags[zaehler]['file'].split('.')[0]
 
         old_start_gains = []
@@ -1983,7 +1998,10 @@ if __name__ == "__main__":
                            folderName.split('/')[-4]+'_'+\
                            folderName.split('/')[-3]+'_'+folderName.split('/')[-2]+'_'
 
-                FolderNames = [folderName, name]
+                if hickle_data:
+                    FolderNames = [folderName, name]
+                else:
+                    FolderNames = [folderName]
                 for i in numpy.arange(len(FolderNames)):
                     if saveFigs and transitions:
                         print 'Phase plot saved to:', FolderNames[i]+ttName+'_GC_'+str(GC_in)+'_'+str(GC_middle)+'_spikePhase.pdf'
@@ -2043,15 +2061,17 @@ if __name__ == "__main__":
                 print 'Picture saved to:', folderName+ttName+'_FR-Position.pdf'
                 f.savefig(folderName+ttName+'_FR-Position.pdf', format='pdf')
 
-                print 'And to: ', name+ttName+'_FR-Position.pdf'
-                f.savefig(name+ttName+'_FR-Position.pdf', format='pdf')
+                if hickle_data:
+                    print 'And to: ', name+ttName+'_FR-Position.pdf'
+                    f.savefig(name+ttName+'_FR-Position.pdf', format='pdf')
 
             else:
                 print 'Picture saved to:', folderName+ttName+'_FR-Position_gain_normalised.pdf'
                 f.savefig(folderName+ttName+'_FR-Position_gain_normalised.pdf', format='pdf')
 
-                print 'And to: ', name+ttName+'_FR-Position_gain_normalised.pdf'
-                f.savefig(name+ttName+'_FR-Position_gain_normalised.pdf', format='pdf')
+                if hickle_data:
+                    print 'And to: ', name+ttName+'_FR-Position_gain_normalised.pdf'
+                    f.savefig(name+ttName+'_FR-Position_gain_normalised.pdf', format='pdf')
 
         RZ_exit_aligned_sTimes = [[], [], []]
         lengths_times = [[], [], []]
@@ -2108,31 +2128,33 @@ if __name__ == "__main__":
                        occupancy.items() + spike_count.items() + phases.items() +
                        RZ_exit_aligned_sTimes_sPlaces.items() + lfp_freq.items() + speeds.items())
 
-        # if gain_normalised:
-        #     hkl_name = '_PF_info_normalised.hkl'
-        # else:
-        #     hkl_name = '_PF_info.hkl'
-        #
-        # print 'dumping info.hkl to ', folderName+ttName+hkl_name
+        if hickle_data:
 
-        # if not rausmap:
-        #     hickle.dump(pf_info, folderName+ttName+hkl_name, mode='w')
-        #     print 'dumping info.hkl to ', folderName.split('/olivia/')[0]+'/olivia/hickle/'+\
-        #                                   folderName.split('/')[-4]+'_'+\
-        #                                   folderName.split('/')[-3]+'_'+folderName.split('/')[-2]+'_'+ttName+hkl_name
-        #
-        #     hickle.dump(pf_info, folderName.split('/olivia/')[0]+'/olivia/hickle/'+folderName.split('/')[-4]+'_'+
-        #                 folderName.split('/')[-3]+'_'+folderName.split('/')[-2]+'_'+ttName+hkl_name, mode='w')
-        #
-        # if rausmap:
-        #
-        #     print 'dumping info.hkl to ', folderName.split('/olivia/')[0]+'/olivia/hickle/cells_not_used_79/'+\
-        #                                   folderName.split('/')[-4]+'_'+\
-        #                                   folderName.split('/')[-3]+'_'+folderName.split('/')[-2]+'_'+ttName+hkl_name
-        #
-        #     hickle.dump(pf_info, folderName.split('/olivia/')[0]+'/olivia/hickle/cells_not_used_79/'+
-        #                 folderName.split('/')[-4]+'_'+
-        #                 folderName.split('/')[-3]+'_'+folderName.split('/')[-2]+'_'+ttName+hkl_name, mode='w')
+            if gain_normalised:
+                hkl_name = '_PF_info_normalised.hkl'
+            else:
+                hkl_name = '_PF_info.hkl'
+
+            print 'dumping info.hkl to ', folderName+ttName+hkl_name
+
+            if not rausmap:
+                hickle.dump(pf_info, folderName+ttName+hkl_name, mode='w')
+                print 'dumping info.hkl to ', folderName.split('/olivia/')[0]+'/olivia/hickle/'+\
+                                              folderName.split('/')[-4]+'_'+\
+                                              folderName.split('/')[-3]+'_'+folderName.split('/')[-2]+'_'+ttName+hkl_name
+
+                hickle.dump(pf_info, folderName.split('/olivia/')[0]+'/olivia/hickle/'+folderName.split('/')[-4]+'_'+
+                            folderName.split('/')[-3]+'_'+folderName.split('/')[-2]+'_'+ttName+hkl_name, mode='w')
+
+            if rausmap:
+
+                print 'dumping info.hkl to ', folderName.split('/olivia/')[0]+'/olivia/hickle/cells_not_used_79/'+\
+                                              folderName.split('/')[-4]+'_'+\
+                                              folderName.split('/')[-3]+'_'+folderName.split('/')[-2]+'_'+ttName+hkl_name
+
+                hickle.dump(pf_info, folderName.split('/olivia/')[0]+'/olivia/hickle/cells_not_used_79/'+
+                            folderName.split('/')[-4]+'_'+
+                            folderName.split('/')[-3]+'_'+folderName.split('/')[-2]+'_'+ttName+hkl_name, mode='w')
 
     os.chdir(cwd)
 
