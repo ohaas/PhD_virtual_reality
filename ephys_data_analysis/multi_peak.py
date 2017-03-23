@@ -1,4 +1,4 @@
-__author__ = "Olivia Haas"
+__author__ = 'haasolivia'
 
 import os
 import sys
@@ -4563,10 +4563,37 @@ def compare_gains(data, examples=None, xlimr=None, ylimr=None, xlimv=None, ylimv
                                   '10529_2015-03-26_VR_linTrack2_TT3_SS_12_PF_info_right'])
     double_cell = numpy.array(['10823_2015-07-03_VR_GCendOL_linTrack1_TT3_SS_18_PF_info_right',
                                '10823_2015-07-03_VR_GCendOL_linTrack1_TT3_SS_18_PF_info_normalised_right'])
+    # direction with both gain activity for bidirectional cells with both gains active in one direction and one gain
+    # active in the other
+    bidirectional_both_gains = numpy.array(['10529_2015-03-27_VR_linTrack1_TT8_SS_14_PF_info_normalised_left', # in confidence interval (right mapped raus)
+                                            '10529_2015-03-27_VR_linTrack1_TT8_SS_14_PF_info_left',
+                                            '10823_2015-08-19_VR_GCendOL_linTrack1_TT3_SS_06_PF_info_normalised_right', # visual tuning (left remapped)
+                                            '10823_2015-08-19_VR_GCendOL_linTrack1_TT3_SS_06_PF_info_right',
+                                            '10823_2015-08-17_VR_GCend_linTrack1_TT2_SS_16_PF_info_normalised_right', # visual tuning (left mapped raus)
+                                            '10823_2015-08-17_VR_GCend_linTrack1_TT2_SS_16_PF_info_right',
+                                            '10823_2015-08-03_VR_GCend_linTrack1_TT4_SS_01_PF_info_normalised_left',# visual tuning (left mapped raus)
+                                            '10823_2015-08-03_VR_GCend_linTrack1_TT4_SS_01_PF_info_left',
+                                            '10353_2014-08-07_VR_GCend_linTrack1_GC_TT1_SS_02_PF_info_normalised_left',# visual tuning (left mapped raus)
+                                            '10353_2014-08-07_VR_GCend_linTrack1_GC_TT1_SS_02_PF_info_left',
+                                            '10823_2015-08-26_VR_GCend_nami_linTrack1_TT2_SS_07_PF_info_normalised_left',# locomotor tuning (right remapped)
+                                            '10823_2015-08-26_VR_GCend_nami_linTrack1_TT2_SS_07_PF_info_left',
+                                            '10823_2015-07-24_VR_GCendDark_linTrack1_TT2_SS_11_PF_info_normalised_right',# locomotor tuning (left mapped raus)
+                                            '10823_2015-07-24_VR_GCendDark_linTrack1_TT2_SS_11_PF_info_right',
+                                            '10823_2015-07-03_VR_GCend_linTrack1_TT3_SS_18_PF_info_normalised_right',# locomotor tuning (left mapped raus)
+                                            '10823_2015-07-03_VR_GCend_linTrack1_TT3_SS_18_PF_info_right',
+                                            '10529_2015-03-25_VR_nami_linTrack2_TT5_SS_03_PF_info_normalised_right',# locomotor tuning (left mapped raus)
+                                            '10529_2015-03-25_VR_nami_linTrack2_TT5_SS_03_PF_info_right',
+                                            '10528_2015-04-21_GCend_Dark_linTrack1_TT2_SS_06_PF_info_normalised_right',# locomotor tuning (left mapped raus)
+                                            '10528_2015-04-21_GCend_Dark_linTrack1_TT2_SS_06_PF_info_right',
+                                            '10528_2015-04-15_VR_GCend_ol_linTrack1_TT2_SS_10_PF_info_normalised_right',# locomotor tuning (left mapped raus)
+                                            '10528_2015-04-15_VR_GCend_ol_linTrack1_TT2_SS_10_PF_info_right',
+                                            '10528_2015-03-13_VR_GCend_linTrack1_TT2_SS_03_PF_info_normalised_right',# locomotor tuning (left mapped raus)
+                                            '10528_2015-03-13_VR_GCend_linTrack1_TT2_SS_03_PF_info_right'])
 
     visual_exp_idx = numpy.array([numpy.where(fr == vc)[0][0] for vc in fr if vc in visual_cell])
     treadmill_exp_idx = numpy.array([numpy.where(fr == tc)[0][0] for tc in fr if tc in treadmill_cell])
     double_exp_idx = numpy.array([numpy.where(fr == tc)[0][0] for tc in fr if tc in double_cell])
+    bidirectional_both_gains_idx = numpy.array([numpy.where(fr == vc)[0][0] for vc in fr if vc in bidirectional_both_gains])
 
     if double:
         # find indices of no-double-cells
@@ -4713,6 +4740,7 @@ def compare_gains(data, examples=None, xlimr=None, ylimr=None, xlimv=None, ylimv
     prop_idx = []
     vis_idx = []
     rem_idx = []
+    confidence_idx = []
 
     # define radial segments to see if radial histogram shifts from prop dominant to visual dominant
     donuts = []
@@ -4759,6 +4787,9 @@ def compare_gains(data, examples=None, xlimr=None, ylimr=None, xlimv=None, ylimv
         xv_bidirec = numpy.insert(xv_bidirec, numpy.arange(2, len(xv_bidirec), 2), numpy.nan)
         yv_bidirec = numpy.insert(yv_bidirec, numpy.arange(2, len(yv_bidirec), 2), numpy.nan)
 
+        locations = []
+        global locations
+
     for i in numpy.arange(len(xr)):
 
         n = 3
@@ -4770,7 +4801,7 @@ def compare_gains(data, examples=None, xlimr=None, ylimr=None, xlimv=None, ylimv
             area.append('prop')
             prop_idx.append(i)
             if bidirec and i in bidriec_idx:
-                bidirec_area.append('prop')
+                bidirec_area.append('F')
 
         elif vis.contains_point([xv[i], yv[i]]):  # \
                 # or numpy.around(yv[i], n) == numpy.around((0.5*xv[i]) - 4./3, n) and 4./3 < xv[i] < 8./3 \
@@ -4793,6 +4824,7 @@ def compare_gains(data, examples=None, xlimr=None, ylimr=None, xlimv=None, ylimv
         elif intermed.contains_point([xv[i], yv[i]]):
             plot_colorV = 'k'
             area.append('inter')
+            confidence_idx.append(i)
             if bidirec and i in bidriec_idx:
                 bidirec_area.append('inter')
 
@@ -4897,7 +4929,7 @@ def compare_gains(data, examples=None, xlimr=None, ylimr=None, xlimv=None, ylimv
                 continue
 
         if only_bidirec:
-            if i not in bidriec_idx:
+            if i not in numpy.concatenate([bidriec_idx, bidirectional_both_gains_idx]): #bidriec_idx:
                 continue
 
         # if examples:
@@ -4950,6 +4982,15 @@ def compare_gains(data, examples=None, xlimr=None, ylimr=None, xlimv=None, ylimv
                 ca3 += 1
 
             elif not only_ca1 and not only_ca3:
+                locations.append([xv[i], yv[i]])
+                if i in bidirectional_both_gains_idx:
+                    print i, [xv[i], yv[i]]
+                if i == 49:
+                    xv[i] = xv[i]-0.009
+                if i == 30:
+                    yv[i] = yv[i]+0.01
+                    xv[i] = xv[i]-0.009
+
                 Jr.ax_joint.plot(xr[i], yr[i], markerfacecolor=plot_colorP, marker=markerCA, markersize=msize,
                                  markeredgecolor=edgecolor, markeredgewidth=1.0, zorder=order)  # alpha=w[i])
                 Jv.ax_joint.plot(xv[i], yv[i], markerfacecolor=plot_colorV, marker=markerCA, markersize=msize,
@@ -4982,6 +5023,13 @@ def compare_gains(data, examples=None, xlimr=None, ylimr=None, xlimv=None, ylimv
                 'double_cell_files': double_files}  #f[double_cells]}
         print 'Dumping prop_vis_rem_filenames.hkl under:'+path+'Summary/prop_vis_rem_filenames.hkl'
         hickle.dump(info, path+'Summary/prop_vis_rem_filenames.hkl', mode='w')
+
+    else:
+
+        info = {'prop_files': fv[prop_idx], 'vis_files': fv[vis_idx], 'conf_files': fv[confidence_idx], 'all_files': fv,
+                'prop_idx': prop_idx, 'vis_idx': vis_idx, 'conf_idx': confidence_idx, 'ca': ca}  #f[double_cells]}
+        print 'Dumping prop_vis_rem_filenames.hkl under:'+path+'Summary/prop_vis_rem_names_singleFields.hkl'
+        hickle.dump(info, path+'Summary/prop_vis_rem_names_singleFields.hkl', mode='w')
 
     # plotting histogram of double cell category mixtures____________________________
 
@@ -5402,14 +5450,14 @@ def compare_gains(data, examples=None, xlimr=None, ylimr=None, xlimv=None, ylimv
 
             frz = 20
 
-            print 'chi2 = ', chi2
-            print 'chi2 p-Wert  = ', p
-            Jv.ax_joint.text(text_x, text_y, '$\chi^2$= '+str(numpy.round(chi2, 2)), fontsize=frz, color=custom_plot.grau)
-            if p < 0.001:
-                Jv.ax_joint.text(text_x+text_dx, text_y+text_dy, '$p$ < 0.001', fontsize=frz, color=custom_plot.grau)
-                # Jv.ax_joint.text(text_x+text_dx, text_y+text_dy, '$p$ = 0.04', fontsize=frz, color=custom_plot.grau)
-            else:
-                Jv.ax_joint.text(text_x+text_dx, text_y+text_dy, '$p$ = '+str(numpy.round(p, 3)), fontsize=frz, color=custom_plot.grau)
+            # print 'chi2 = ', chi2
+            # print 'chi2 p-Wert  = ', p
+            # Jv.ax_joint.text(text_x, text_y, '$\chi^2$= '+str(numpy.round(chi2, 2)), fontsize=frz, color=custom_plot.grau)
+            # if p < 0.001:
+            #     Jv.ax_joint.text(text_x+text_dx, text_y+text_dy, '$p$ < 0.001', fontsize=frz, color=custom_plot.grau)
+            #     # Jv.ax_joint.text(text_x+text_dx, text_y+text_dy, '$p$ = 0.04', fontsize=frz, color=custom_plot.grau)
+            # else:
+            #     Jv.ax_joint.text(text_x+text_dx, text_y+text_dy, '$p$ = '+str(numpy.round(p, 3)), fontsize=frz, color=custom_plot.grau)
 
         # figA, axA = pl.subplots(1, 1, figsize=(10, 9))
         # axA.axvline(hlines[a][0], color='k', linestyle=':')
@@ -6094,13 +6142,13 @@ if __name__ == "__main__":
     # find_double_cells(info=info)
 
     # # fourth
-    # info = hickle.load(path+'Summary/delta_and_weight_info.hkl')
-    # example_points = [[1.87, 0.05], [0.18, -0.47]]  # [],[vis],[prop]  [3.0, 0.67], [1.69, 0.00], [0.45, -0.75], [0.00, -0.56]
+    info = hickle.load(path+'Summary/delta_and_weight_info.hkl')
+    example_points = [[1.87, 0.05], [0.18, -0.47]]  # [],[vis],[prop]  [3.0, 0.67], [1.69, 0.00], [0.45, -0.75], [0.00, -0.56]
     # # print example_points
     # # plot_deltas(data=info, examples=example_points, xlim=[-8./6, 4], ylim=[-2, 2], double=False)
-    # compare_gains(data=info, examples=example_points, xlimr=[0, 4], ylimr=[0, 4], xlimv=[0, 2], ylimv=[0, 2],
-    #               double=True, only_double=False, only_ca1=False, only_ca3=False, hist_corrected=False,
-    #               bidirec=True, only_bidirec=False, connected=False, bsp=False, background=False, confidence=False)
+    compare_gains(data=info, examples=example_points, xlimr=[0, 4], ylimr=[0, 4], xlimv=[0, 2], ylimv=[0, 2],
+                  double=False, only_double=False, only_ca1=False, only_ca3=False, hist_corrected=False,
+                  bidirec=True, only_bidirec=False, connected=False, bsp=False, background=True, confidence=True)
 
     # fifth
     # gauss_data_corr(xlimfr=[0, 13], xlimwidth=[0, 2], xlimpos=[0, 2], fz=20, figsize=6, scale=1.8,
@@ -6110,7 +6158,7 @@ if __name__ == "__main__":
 
     # theta_delta_ratio()
     #
-    cluster_quality()
+    # cluster_quality()
     # pie_chart()
     # merge_hkl()
 

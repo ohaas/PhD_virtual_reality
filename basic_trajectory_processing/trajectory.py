@@ -800,8 +800,7 @@ class trajectory(object):
         self.getTrajDimensions()
         self.euler[0] += yaw
 
-
-    def plot(self, fig=None, ax=None, offset=2, language='e', chic=False, marker=None):
+    def plot(self, fig=None, ax=None, offset=2, language='e', chic=False, marker=None, line_width=None):
 
         if not fig:
             fig = pl.figure(figsize=(8, 6))
@@ -810,16 +809,20 @@ class trajectory(object):
         axcb = None
 
         if not marker:
-            line_segments = LineCollection([[x,self.places[i+1+offset,0:2]] \
-                                for i,x in enumerate(self.places[offset:-(1+offset),0:2])],\
-                                linestyles = 'solid', linewidths=mpl.rcParams['lines.linewidth']/2.)
+            if line_width:
+                lw = line_width
+            else:
+                lw = mpl.rcParams['lines.linewidth']/2.
+            line_segments = LineCollection([[x, self.places[i+1+offset, 0:2]]
+                                            for i, x in enumerate(self.places[offset:-(1+offset), 0:2])],
+                                           linestyles='solid', linewidths=lw)
             line_segments.set_array(self.times)
             ax.add_collection(line_segments)
         else:
             ax.plot(self.places[offset:, 0], self.places[offset:, 1], marker)
 
-        ax.plot(self.places[0+offset,0], self.places[0+offset,1], 'o')      # start point
-        ax.plot(self.places[-2,0], self.places[-2,1], 'd')                  # end point
+        ax.plot(self.places[0+offset,0], self.places[0+offset, 1], 'o')      # start point
+        ax.plot(self.places[-2, 0], self.places[-2, 1], 'd')                  # end point
 
 
         # huebsch machen
@@ -1261,10 +1264,9 @@ class linearMazeTrajectory(trajectory):
         else:
             print "NOTE: Track already oriented."
 
+    def plot(self, fig=None, ax=None, offset=2, language='e', chic=False, line_width=None):
 
-    def plot(self, fig=None, ax=None, offset=2, language='e', chic=False):
-
-        fig, ax, axcb = trajectory.plot(self, fig, ax, offset, language, chic)
+        fig, ax, axcb = trajectory.plot(self, fig, ax, offset, language, chic, line_width=line_width)
 
         # adjust axes
         pos = [.15, .65, .65, .3]

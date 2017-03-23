@@ -309,7 +309,7 @@ def rcc(lindat0, phidat0, abound=[-2., 2.], display=False, PF=False):
     v = numpy.mean(numpy.exp(1j*(phidat-2*numpy.pi*aopt*lindat)))
     phi0 = numpy.mod(numpy.angle(v), 2*numpy.pi)
 
-    # lindat are the spike places
+    # lindat are the normalised spike places
     # phidat are the spike phases
     theta = numpy.angle(numpy.exp(2*numpy.pi*1j*numpy.abs(aopt)*lindat))
 

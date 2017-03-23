@@ -1,4 +1,4 @@
-__author__ = "Olivia Haas"
+__author__ = 'haasolivia'
 
 import numpy
 import hickle
@@ -144,6 +144,7 @@ def delta(data, max_percentage=5):
 if __name__ == "__main__":
 
     for i in numpy.arange(len(t)):
+
         if i in cluster1_indices:  # proprioceptive cell indices
             # get histogram Data
             data_t = get_histData(array=t[i], binwidth_a=binwidth_t)
@@ -154,16 +155,16 @@ if __name__ == "__main__":
             delta_d = delta(data=data_d)/distance_bin
 
             # remove all time data, which is larger than max_plot_t, because it wont be plotted:
-            smaller_idx = numpy.where(data_t[1][:-1] < 10.0)[0]
+            smaller_idx = numpy.where(data_t[1][:-1] < max_plot_t)[0]
             data_t0 = data_t[0][smaller_idx].copy()
             data_d0 = data_d[0].copy()
             # smooth array
             data_t0 = scipy.ndimage.filters.gaussian_filter1d(data_t0, smoothing_sigma)
             data_d0 = scipy.ndimage.filters.gaussian_filter1d(data_d0, smoothing_sigma)
             if len(data_t0) != max_t_bins+1:
-                 data_t0 = numpy.concatenate((data_t0, numpy.repeat(0, max_t_bins+1-len(data_t0))), axis=1)
+                data_t0 = numpy.concatenate((data_t0, numpy.repeat(0, max_t_bins+1-len(data_t0))), axis=1)
             if len(data_d0) != max_d_bins:
-                 data_d0 = numpy.concatenate((data_d0, numpy.repeat(0, max_d_bins-len(data_d0))), axis=1)
+                data_d0 = numpy.concatenate((data_d0, numpy.repeat(0, max_d_bins-len(data_d0))), axis=1)
             if delta_t < delta_d:
                 ST_hist_timeTuning.append(list(data_t0.astype(float)/max(data_t0)))
                 SD_hist_timeTuning.append(list(data_d0.astype(float)/max(data_d0)))
@@ -185,16 +186,16 @@ if __name__ == "__main__":
             delta_d_vis = delta(data=data_d_vis)/distance_bin
 
             # remove all time data, which is larger than max_plot_t, because it wont be plotted:
-            smaller_idx_vis = numpy.where(data_t_vis[1][:-1] < 10.0)[0]
+            smaller_idx_vis = numpy.where(data_t_vis[1][:-1] < max_plot_t)[0]
             data_t0_vis = data_t_vis[0][smaller_idx_vis].copy()
             data_d0_vis = data_d_vis[0].copy()
             # smooth array
             data_t0_vis = scipy.ndimage.filters.gaussian_filter1d(data_t0_vis, smoothing_sigma)
             data_d0_vis = scipy.ndimage.filters.gaussian_filter1d(data_d0_vis, smoothing_sigma)
             if len(data_t0_vis) != max_t_bins+1:
-                 data_t0_vis = numpy.concatenate((data_t0_vis, numpy.repeat(0, max_t_bins+1-len(data_t0_vis))), axis=1)
+                data_t0_vis = numpy.concatenate((data_t0_vis, numpy.repeat(0, max_t_bins+1-len(data_t0_vis))), axis=1)
             if len(data_d0_vis) != max_d_bins_vis:
-                 data_d0_vis = numpy.concatenate((data_d0_vis, numpy.repeat(0, max_d_bins_vis-len(data_d0_vis))), axis=1)
+                data_d0_vis = numpy.concatenate((data_d0_vis, numpy.repeat(0, max_d_bins_vis-len(data_d0_vis))), axis=1)
             if delta_t_vis < delta_d_vis:
                 ST_hist_timeTuning_vis.append(list(data_t0_vis.astype(float)/max(data_t0_vis)))
                 SD_hist_timeTuning_vis.append(list(data_d0_vis.astype(float)/max(data_d0_vis)))
@@ -239,15 +240,15 @@ if __name__ == "__main__":
     sorted_idx_t_vis = numpy.argsort(max_idx_t_vis)
     sorted_idx_d_vis = numpy.argsort(max_idx_d_vis)
 
-    ST_hist_tSort = ST_hist_timeTuning[sorted_idx_t]
-    SD_hist_tSort = SD_hist_timeTuning[sorted_idx_t]
-    ST_hist_tSort_vis = ST_hist_timeTuning_vis[sorted_idx_t_vis]
-    SD_hist_tSort_vis = SD_hist_timeTuning_vis[sorted_idx_t_vis]
+    ST_hist_tSort = numpy.array(ST_hist_timeTuning)[sorted_idx_t]
+    SD_hist_tSort = numpy.array(SD_hist_timeTuning)[sorted_idx_t]
+    ST_hist_tSort_vis = numpy.array(ST_hist_timeTuning_vis)[sorted_idx_t_vis]
+    SD_hist_tSort_vis = numpy.array(SD_hist_timeTuning_vis)[sorted_idx_t_vis]
 
-    ST_hist_dSort = ST_hist_distTuning[sorted_idx_d]
-    SD_hist_dSort = SD_hist_distTuning[sorted_idx_d]
-    ST_hist_dSort_vis = ST_hist_distTuning_vis[sorted_idx_d_vis]
-    SD_hist_dSort_vis = SD_hist_distTuning_vis[sorted_idx_d_vis]
+    ST_hist_dSort = numpy.array(ST_hist_distTuning)[sorted_idx_d]
+    SD_hist_dSort = numpy.array(SD_hist_distTuning)[sorted_idx_d]
+    ST_hist_dSort_vis = numpy.array(ST_hist_distTuning_vis)[sorted_idx_d_vis]
+    SD_hist_dSort_vis = numpy.array(SD_hist_distTuning_vis)[sorted_idx_d_vis]
 
     tickNum = 4
 
@@ -256,25 +257,33 @@ if __name__ == "__main__":
     f_t_vis.suptitle(str(len(ST_hist_tSort))+' time tuned cells')
     f_d_vis.suptitle(str(len(ST_hist_dSort))+' distance tuned cells')
 
-    heatmap(ST_hist_tSort, ax_t[0], mini=min_t, maxi=max_plot_t, stepsize=(max_t_bins+1)/tickNum, binMax=max_t_bins+1,
-            label='Time from RZ exit in s', ticks=3)
-    heatmap(SD_hist_tSort, ax_t[1], mini=min_d, maxi=max_plot_d, stepsize=max_d_bins/tickNum, binMax=max_d_bins,
-            label='Distance from RZ exit in cm')
+    if len(ST_hist_tSort):
+        heatmap(ST_hist_tSort, ax_t[0], mini=min_t, maxi=max_plot_t, stepsize=(max_t_bins+1)/tickNum, binMax=max_t_bins+1,
+                label='Time from RZ exit in s', ticks=3)
+    if len(SD_hist_tSort):
+        heatmap(SD_hist_tSort, ax_t[1], mini=min_d, maxi=max_plot_d, stepsize=max_d_bins/tickNum, binMax=max_d_bins,
+                label='Distance from RZ exit in cm')
 
-    heatmap(ST_hist_dSort, ax_d[0], mini=min_t, maxi=max_plot_t, stepsize=(max_t_bins+1)/tickNum, binMax=max_t_bins+1,
-            label='Time from RZ exit in s', ticks=3)
-    heatmap(SD_hist_dSort, ax_d[1], mini=min_d, maxi=max_plot_d, stepsize=max_d_bins/tickNum, binMax=max_d_bins,
-            label='Distance from RZ exit in cm')
+    if len(ST_hist_dSort):
+        heatmap(ST_hist_dSort, ax_d[0], mini=min_t, maxi=max_plot_t, stepsize=(max_t_bins+1)/tickNum, binMax=max_t_bins+1,
+                label='Time from RZ exit in s', ticks=3)
+    if len(SD_hist_dSort):
+        heatmap(SD_hist_dSort, ax_d[1], mini=min_d, maxi=max_plot_d, stepsize=max_d_bins/tickNum, binMax=max_d_bins,
+                label='Distance from RZ exit in cm')
 
-    heatmap(ST_hist_tSort_vis, ax_t_vis[0], mini=min_t_vis, maxi=max_plot_t, stepsize=(max_t_bins+1)/tickNum,
-            binMax=max_t_bins+1, label='Time from RZ exit in s', ticks=3)
-    heatmap(SD_hist_tSort_vis, ax_t_vis[1], mini=min_d_vis, maxi=max_plot_d_vis, stepsize=max_d_bins_vis/tickNum,
-            binMax=max_d_bins_vis, label='Distance from RZ exit in cm')
+    if len(ST_hist_tSort_vis):
+        heatmap(ST_hist_tSort_vis, ax_t_vis[0], mini=min_t_vis, maxi=max_plot_t, stepsize=(max_t_bins+1)/tickNum,
+                binMax=max_t_bins+1, label='Time from RZ exit in s', ticks=3)
+    if len(SD_hist_tSort_vis):
+        heatmap(SD_hist_tSort_vis, ax_t_vis[1], mini=min_d_vis, maxi=max_plot_d_vis, stepsize=max_d_bins_vis/tickNum,
+                binMax=max_d_bins_vis, label='Distance from RZ exit in cm')
 
-    heatmap(ST_hist_dSort_vis, ax_d_vis[0], mini=min_t_vis, maxi=max_plot_t, stepsize=(max_t_bins+1)/tickNum,
-            binMax=max_t_bins+1, label='Time from RZ exit in s', ticks=3)
-    heatmap(SD_hist_dSort_vis, ax_d_vis[1], mini=min_d_vis, maxi=max_plot_d_vis, stepsize=max_d_bins_vis/tickNum,
-            binMax=max_d_bins_vis, label='Distance from RZ exit in cm')
+    if len(ST_hist_dSort_vis):
+        heatmap(ST_hist_dSort_vis, ax_d_vis[0], mini=min_t_vis, maxi=max_plot_t, stepsize=(max_t_bins+1)/tickNum,
+                binMax=max_t_bins+1, label='Time from RZ exit in s', ticks=3)
+    if len(SD_hist_dSort_vis):
+        heatmap(SD_hist_dSort_vis, ax_d_vis[1], mini=min_d_vis, maxi=max_plot_d_vis, stepsize=max_d_bins_vis/tickNum,
+                binMax=max_d_bins_vis, label='Distance from RZ exit in cm')
 
 
     print 'Saving figure under:'+summ+'propTimeCells_summary.pdf'

@@ -1,4 +1,4 @@
-__author__ = "Olivia Haas"
+__author__ = 'haasolivia'
 __version__ = "1.0, October 2015"
 
 from functools import partial

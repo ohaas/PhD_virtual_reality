@@ -1,4 +1,4 @@
-__author__ = "Olivia Haas"
+__author__ = 'haasolivia'
 
 import sys
 import os
@@ -32,7 +32,7 @@ def getGC_indexes(GC, Gain=None):
     gain_sorted_indexes = []
     time_sorted_indexes = []
 
-    for s in numpy.arange(len(GC)):
+    for s in numpy.arange(len(GC)-1):
         if transitions and Gain and GC[s].gain_in == Gain:  # and GC[s].gain_middle == GC_middle or GC[s].gain_in == Grun:
             gc_indexes.append(s)
             gain_and_indexes.append([GC[s].gain_middle, GC[s].visible_middle, GC[s].ol_middle, s])
@@ -117,8 +117,22 @@ def traces(GC, gc_indexes, traceName, transitions, Speed=False, Frequency=False,
     direction = spiketime_direction
 
     path = '/Users/haasolivia/Documents/saw/dataWork/olivia/hickle/'
+    path1 = '/Users/haasolivia/Documents/saw/dataWork/olivia/hickle_secondary/only_active_in_one_gain_33/'
     folder = folderName.split('/')[-4]+'_'+folderName.split('/')[-3]+'_'+folderName.split('/')[-2]+'_'+ttName+'_PF_info.hkl'
-    file = hickle.load(path+folder)
+    filenum = 0
+    try:
+        file = hickle.load(path+folder)
+        filenum = 1
+    except IOError:
+        try:
+            file = hickle.load(path1+folder)
+            filenum = 2
+            print 'file loaded from dataWork/olivia/hickle_secondary/only_active_in_one_gain_33/'
+        except IOError:
+            file = hickle.load(folderName+ttName+'_PF_info.hkl')
+            filenum = 3
+            print 'file loaded from animal home folder'
+    global filenum
     dw = hickle.load(path+'Summary/delta_and_weight_info.hkl')
     double_cells = numpy.array(dw['double_cell_files'])
     double_rundirec = numpy.array(dw['double_cell_direc'])
@@ -684,14 +698,14 @@ def traces(GC, gc_indexes, traceName, transitions, Speed=False, Frequency=False,
         make_subarrays_equal_long(SRspiketimes_inPF)
         make_subarrays_equal_long(SRspike_xpos_inPF)
 
-        info = {'SRgains': SRgain, 'SRspiketimes': SRspiketimes, 'SRspike_xpos': SRspike_xpos,
-                'SRspiketimes_inPF': SRspiketimes_inPF,
-                'SRspike_xpos_inPF': SRspike_xpos_inPF,
-                'category': area,
-                'run_direction': direction}
-
-    name = folderName.split('/')[-4]+'_'+folderName.split('/')[-3]+'_'+folderName.split('/')[-2]+'_'+ttName+'_'+direction+'.hkl'
-    hickle.dump(info, path+'overlap/'+name)
+    #     info = {'SRgains': SRgain, 'SRspiketimes': SRspiketimes, 'SRspike_xpos': SRspike_xpos,
+    #             'SRspiketimes_inPF': SRspiketimes_inPF,
+    #             'SRspike_xpos_inPF': SRspike_xpos_inPF,
+    #             'category': area,
+    #             'run_direction': direction}
+    #
+    # name = folderName.split('/')[-4]+'_'+folderName.split('/')[-3]+'_'+folderName.split('/')[-2]+'_'+ttName+'_'+direction+'.hkl'
+    # hickle.dump(info, path+'overlap/'+name)
 
     return fig1
 
@@ -965,7 +979,7 @@ if __name__ == "__main__":
                 sort = '_gainSorted'
             elif time_sorted:
                 fig = traces(GC=GC, gc_indexes=time_sorted_indexes, traceName='Trajectory and spiketrain (time sorted)',
-                                  transitions=False, Traj=True, spiketime_direction=run_direction)
+                                  transitions=False, Traj=True) #, spiketime_direction=run_direction)
                 sort = '_timeSorted'
             else:
                 print 'WARNING: gain_sorted or time_sorted needs to be specified in terminal!'
@@ -974,10 +988,21 @@ if __name__ == "__main__":
                 print 'Saving single run Plots in: '+folderName+ttName+'_spikePlace'+sort+'.pdf'
                 fig.savefig(folderName+ttName+'_spikePlace'+sort+'.pdf', format='pdf')
 
-                second_figname = folderName.split('/olivia/')[0]+'/olivia/hickle/Plots/'+folderName.split('/')[-4]+'_'+\
-                                 folderName.split('/')[-3]+'_'+folderName.split('/')[-2]+'_'+ttName+'_spikePlace'+sort+'.pdf'
-                print 'And in: '+second_figname
-                fig.savefig(second_figname, format='pdf')
+                name = folderName.split('/')[-4]+'_'+folderName.split('/')[-3]+'_'+folderName.split('/')[-2]+'_'+\
+                       ttName+'_spikePlace'+sort+'.pdf'
+                if filenum == 1:
+                    second_figname = folderName.split('/olivia/')[0]+'/olivia/hickle/Plots/'+name
+                elif filenum == 2:
+                    second_figname = folderName.split('/olivia/')[0]+'/olivia/hickle_secondary/' \
+                                                                     'only_active_in_one_gain_33/Plots/'+name
+                else:
+                    print 'Only animal home folder given as save destination!'
+                if filenum == 1 or filenum == 2:
+                    print 'And in: '+second_figname
+                    fig.savefig(second_figname, format='pdf')
+                print 'And in: '+'/Users/haasolivia/Documents/Posters/BCCN_2015/OL_pic/'+name
+                fig.savefig('/Users/haasolivia/Documents/Posters/BCCN_2015/OL_pic/'+name, format='pdf')
+
 
         if not showFigs:
             pl.ioff()

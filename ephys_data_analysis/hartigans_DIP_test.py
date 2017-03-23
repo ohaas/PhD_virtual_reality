@@ -1,4 +1,4 @@
-__author__ = "Olivia Haas"
+__author__ = 'haasolivia'
 
 import numpy as num
 import hickle

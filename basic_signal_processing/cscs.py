@@ -4,7 +4,7 @@ signale.cscs
 
 A module for signals from continously sampled channels (CSCs).
 """
-__author__ = ("KT", "Alireza Chenani", "Olivia Haas")
+__author__ = ("KT", "Alireza Chenani")
 __version__ = "4.4.1, October 2014"
 
 # python modules

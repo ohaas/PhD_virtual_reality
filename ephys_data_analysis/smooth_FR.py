@@ -1,9 +1,9 @@
-__author__ = "Olivia Haas"
+__author__ = 'haasolivia'
 
 import sys
 import os
 
-pos = f['xMaxFRySuminPF_MaxFRySuminPF_xCMySuminPF_'+data_rundirec[i]+'Runs_gain_'+gain][0]
+# pos = f['xMaxFRySuminPF_MaxFRySuminPF_xCMySuminPF_'+data_rundirec[i]+'Runs_gain_'+gain][0]
 
 extraPaths = [os.path.join(os.path.abspath(os.path.dirname(__file__)), '../scripts')]
 for p in extraPaths:
@@ -19,21 +19,31 @@ import custom_plot
 from scipy import stats
 import signale
 
-where = '/Users/haasolivia/Desktop/plots/bsp/'
+# where = '/Users/haasolivia/Desktop/plots/bsp/'
+where = '/Users/haasolivia/Documents/Posters/BCCN_2015/OL_pic/'
 
 server = 'saw'
 hick = '/Users/haasolivia/Documents/'+server+'/dataWork/olivia/hickle/'
+hick1 = '/Users/haasolivia/Documents/'+server+'/dataWork/olivia/hickle_secondary/only_active_in_one_gain_33/'
 # hick = '/Users/haasolivia/Documents/'+server+'/dataWork/olivia/hickle_secondary/visual_and_prop/'
 
 #
+# dark1 = ['10823_2015-07-15_VR_GCendDark_linTrack1_TT3_SS_10_PF_info.hkl', '10823_2015-07-15_VR_GCendDark_linTrack1_TT3_SS_10_PF_info.hkl']
+# dark2 = ['10528_2015-04-09_VR_GCend_Dark_linTrack1_TT1_SS_07_PF_info.hkl', '10528_2015-04-09_VR_GCend_Dark_linTrack1_TT1_SS_07_PF_info.hkl']
+# dark3 = ['10528_2015-04-21_GCend_Dark_linTrack1_TT2_SS_06_PF_info.hkl', '10528_2015-04-21_GCend_Dark_linTrack1_TT2_SS_06_PF_info.hkl']
+
+ol1 = ['10823_2015-08-19_VR_GCendOL_linTrack1_TT2_SS_13_PF_info.hkl', '10823_2015-08-19_VR_GCendOL_linTrack1_TT2_SS_13_PF_info.hkl']
+ol2 = ['10823_2015-07-03_VR_GCendOL_linTrack1_TT3_SS_02_PF_info.hkl', '10823_2015-07-03_VR_GCendOL_linTrack1_TT3_SS_02_PF_info.hkl']
+ol3 = ['10823_2015-07-03_VR_GCendOL_linTrack1_TT3_SS_18_PF_info.hkl', '10823_2015-07-03_VR_GCendOL_linTrack1_TT3_SS_18_PF_info.hkl']
+ol4 = ['10528_2015-04-13_VR_GCend_ol_linTrack1_TT3_SS_02_PF_info.hkl', '10528_2015-04-13_VR_GCend_ol_linTrack1_TT3_SS_02_PF_info.hkl']
 
 # doppelz1 = ['10823_2015-06-29_VR_GCend_linTrack1_TT3_SS_18_PF_info.hkl', '10823_2015-06-29_VR_GCend_linTrack1_TT3_SS_18_PF_info.hkl']
 # doppelz2 = ['10823_2015-07-03_VR_GCendOL_linTrack1_TT3_SS_18_PF_info.hkl', '10823_2015-07-03_VR_GCendOL_linTrack1_TT3_SS_18_PF_info.hkl']
 # doppelz3 = ['10823_2015-08-17_VR_GCend_linTrack1_TT2_SS_08_PF_info.hkl', '10823_2015-08-17_VR_GCend_linTrack1_TT2_SS_08_PF_info.hkl']
 # doppelz4 = ['10823_2015-08-12_VR_GCend_linTrack1_TT4_SS_07_PF_info.hkl', '10823_2015-08-12_VR_GCend_linTrack1_TT4_SS_07_PF_info.hkl']
-doppelz5 = ['10823_2015-06-30_VR_GCend_linTrack1_TT4_SS_14_PF_info.hkl', '10823_2015-06-30_VR_GCend_linTrack1_TT4_SS_14_PF_info.hkl']
+# doppelz5 = ['10823_2015-06-30_VR_GCend_linTrack1_TT4_SS_14_PF_info.hkl', '10823_2015-06-30_VR_GCend_linTrack1_TT4_SS_14_PF_info.hkl']
 # doppelz6 = ['10823_2015-07-20_VR_GCendDark_linTrack1_TT3_SS_09_PF_info.hkl', '10823_2015-07-20_VR_GCendDark_linTrack1_TT3_SS_09_PF_info.hkl']
-doppelz7 = ['10823_2015-06-30_VR_GCend_linTrack1_TT2_SS_14_PF_info.hkl', '10823_2015-06-30_VR_GCend_linTrack1_TT2_SS_14_PF_info.hkl']
+# doppelz7 = ['10823_2015-06-30_VR_GCend_linTrack1_TT2_SS_14_PF_info.hkl', '10823_2015-06-30_VR_GCend_linTrack1_TT2_SS_14_PF_info.hkl']
 
 # single - bi
 
@@ -61,7 +71,7 @@ doppelz7 = ['10823_2015-06-30_VR_GCend_linTrack1_TT2_SS_14_PF_info.hkl', '10823_
 # doppelz3 = ['10528_2015-04-18_VR_GCend_Dark_linTrack1_TT2_SS_24_PF_info.hkl', '10528_2015-04-18_VR_GCend_Dark_linTrack1_TT2_SS_24_PF_info.hkl']
 # doppelz4 = ['10528_2015-04-18_VR_GCend_Dark_linTrack1_TT4_SS_10_PF_info.hkl', '10528_2015-04-18_VR_GCend_Dark_linTrack1_TT4_SS_10_PF_info.hkl']
 # doppelz5 = ['10528_2015-04-19_VR_GCend_linTrack1_dark_TT2_SS_04_PF_info.hkl', '10528_2015-04-19_VR_GCend_linTrack1_dark_TT2_SS_04_PF_info.hkl']
-doppelz6 = ['10528_2015-04-13_VR_GCend_ol_linTrack1_TT1_SS_07_PF_info.hkl', '10528_2015-04-13_VR_GCend_ol_linTrack1_TT1_SS_07_PF_info.hkl']
+#doppelz6 = ['10528_2015-04-13_VR_GCend_ol_linTrack1_TT1_SS_07_PF_info.hkl', '10528_2015-04-13_VR_GCend_ol_linTrack1_TT1_SS_07_PF_info.hkl']
 # doppelz7 = ['10537_2015-10-20_VR_GCend_linTrack1_TT8_SS_08_PF_info.hkl', '10537_2015-10-20_VR_GCend_linTrack1_TT8_SS_08_PF_info.hkl']
 # doppelz8 = ['10823_2015-08-19_VR_GCend_linTrack1_TT3_SS_07_PF_info.hkl', '10823_2015-08-19_VR_GCend_linTrack1_TT3_SS_07_PF_info.hkl']
 # doppelz9 = ['10823_2015-08-18_VR_GCend_nami_linTrack1_TT2_SS_13_PF_info.hkl', '10823_2015-08-18_VR_GCend_nami_linTrack1_TT2_SS_13_PF_info.hkl']
@@ -90,9 +100,9 @@ doppelz6 = ['10528_2015-04-13_VR_GCend_ol_linTrack1_TT1_SS_07_PF_info.hkl', '105
 # doppel2 = [hickle.load(hick+doppelz2[0]), hickle.load(hick+doppelz2[1])]
 # doppel3 = [hickle.load(hick+doppelz3[0]), hickle.load(hick+doppelz3[1])]
 # doppel4 = [hickle.load(hick+doppelz4[0]), hickle.load(hick+doppelz4[1])]
-doppel5 = [hickle.load(hick+doppelz5[0]), hickle.load(hick+doppelz5[1])]
-doppel6 = [hickle.load(hick+'/cells_not_used_52_16single1gain_3double1gain/'+doppelz6[0]), hickle.load(hick+'/cells_not_used_52_16single1gain_3double1gain/'+doppelz6[1])]
-doppel7 = [hickle.load(hick+doppelz7[0]), hickle.load(hick+doppelz7[1])]
+# doppel5 = [hickle.load(hick+doppelz5[0]), hickle.load(hick+doppelz5[1])]
+# doppel6 = [hickle.load(hick+'/cells_not_used_52_16single1gain_3double1gain/'+doppelz6[0]), hickle.load(hick+'/cells_not_used_52_16single1gain_3double1gain/'+doppelz6[1])]
+# doppel7 = [hickle.load(hick+doppelz7[0]), hickle.load(hick+doppelz7[1])]
 # doppel8 = [hickle.load(hick+doppelz8[0]), hickle.load(hick+doppelz8[1])]
 # doppel9 = [hickle.load(hick+doppelz9[0]), hickle.load(hick+doppelz9[1])]
 # doppel10 = [hickle.load(hick+doppelz10[0]), hickle.load(hick+doppelz10[1])]
@@ -100,6 +110,16 @@ doppel7 = [hickle.load(hick+doppelz7[0]), hickle.load(hick+doppelz7[1])]
 # doppel12 = [hickle.load(hick+doppelz12[0]), hickle.load(hick+doppelz12[1])]
 # doppel13 = [hickle.load(hick+doppelz13[0]), hickle.load(hick+doppelz13[1])]
 # doppel14 = [hickle.load(hick+doppelz14[0]), hickle.load(hick+doppelz14[1])]
+
+# dark01 = [hickle.load(hick+dark1[0]), hickle.load(hick+dark1[1])]
+# dark02 = [hickle.load(hick+dark2[0]), hickle.load(hick+dark2[1])]
+# dark03 = [hickle.load(hick+dark3[0]), hickle.load(hick+dark3[1])]
+
+ol01 = [hickle.load('/Users/haasolivia/Documents/saw/dataWork/olivia//10823/2015-08-19_VR_GCendOL/linTrack1/TT2_SS_13_PF_info.hkl'),
+        hickle.load('/Users/haasolivia/Documents/saw/dataWork/olivia//10823/2015-08-19_VR_GCendOL/linTrack1/TT2_SS_13_PF_info.hkl')]
+ol02 = [hickle.load(hick+ol2[0]), hickle.load(hick+ol2[1])]
+ol03 = [hickle.load(hick+ol3[0]), hickle.load(hick+ol3[1])]
+ol04 = [hickle.load(hick1+ol4[0]), hickle.load(hick1+ol4[1])]
 
 # ----------------------------------------------------------------------
 
@@ -116,8 +136,8 @@ doppel7 = [hickle.load(hick+doppelz7[0]), hickle.load(hick+doppelz7[1])]
 #          doppel7, doppel7, doppel8, doppel8]
 # run_direc = ['right', 'left', 'right', 'left', 'right', 'left', 'right', 'left', 'right', 'left', 'right', 'left',
 #              'right', 'left', 'right', 'left']
-cells = [doppel5, doppel5, doppel6, doppel6, doppel7, doppel7]
-run_direc = ['right', 'left', 'right', 'left', 'right', 'left']
+cells = [ol01, ol02, ol03, ol04]
+run_direc = ['right', 'right', 'right', 'left']
 
 # rausmapping
 
@@ -165,12 +185,12 @@ run_direc = ['right', 'left', 'right', 'left', 'right', 'left']
 #              [doppelz8[0].split('PF')[0]+run_direc[14], doppelz8[0].split('PF')[0]+'norm_'+run_direc[14]],
 #              [doppelz8[0].split('PF')[0]+run_direc[15], doppelz8[0].split('PF')[0]+'norm_'+run_direc[15]]]
 
-fig_names = [[doppelz5[0].split('PF')[0]+run_direc[0], doppelz5[0].split('PF')[0]+'norm_'+run_direc[0]],
-             [doppelz5[0].split('PF')[0]+run_direc[1], doppelz5[0].split('PF')[0]+'norm_'+run_direc[1]],
-             [doppelz6[0].split('PF')[0]+run_direc[2], doppelz6[0].split('PF')[0]+'norm_'+run_direc[2]],
-             [doppelz6[0].split('PF')[0]+run_direc[3], doppelz6[0].split('PF')[0]+'norm_'+run_direc[3]],
-             [doppelz7[0].split('PF')[0]+run_direc[4], doppelz7[0].split('PF')[0]+'norm_'+run_direc[4]],
-             [doppelz7[0].split('PF')[0]+run_direc[5], doppelz7[0].split('PF')[0]+'norm_'+run_direc[5]]]
+# fig_names = [[doppelz5[0].split('PF')[0]+run_direc[0], doppelz5[0].split('PF')[0]+'norm_'+run_direc[0]],
+#              [doppelz5[0].split('PF')[0]+run_direc[1], doppelz5[0].split('PF')[0]+'norm_'+run_direc[1]],
+#              [doppelz6[0].split('PF')[0]+run_direc[2], doppelz6[0].split('PF')[0]+'norm_'+run_direc[2]],
+#              [doppelz6[0].split('PF')[0]+run_direc[3], doppelz6[0].split('PF')[0]+'norm_'+run_direc[3]],
+#              [doppelz7[0].split('PF')[0]+run_direc[4], doppelz7[0].split('PF')[0]+'norm_'+run_direc[4]],
+#              [doppelz7[0].split('PF')[0]+run_direc[5], doppelz7[0].split('PF')[0]+'norm_'+run_direc[5]]]
 
 # rausmapping
 
@@ -217,6 +237,11 @@ fig_names = [[doppelz5[0].split('PF')[0]+run_direc[0], doppelz5[0].split('PF')[0
 #              [doppelz13[0].split('PF')[0]+run_direc[25], doppelz13[0].split('PF')[0]+'norm_'+run_direc[25]],
 #              [doppelz14[0].split('PF')[0]+run_direc[26], doppelz14[0].split('PF')[0]+'norm_'+run_direc[26]],
 #              [doppelz14[0].split('PF')[0]+run_direc[27], doppelz14[0].split('PF')[0]+'norm_'+run_direc[27]]]
+
+fig_names = [[ol1[0].split('PF')[0]+run_direc[0], ol1[0].split('PF')[0]+'norm_'+run_direc[0]],
+             [ol2[0].split('PF')[0]+run_direc[1], ol2[0].split('PF')[0]+'norm_'+run_direc[1]],
+             [ol3[0].split('PF')[0]+run_direc[2], ol3[0].split('PF')[0]+'norm_'+run_direc[2]],
+             [ol4[0].split('PF')[0]+run_direc[3], ol4[0].split('PF')[0]+'norm_'+run_direc[3]]]
 
 
 def plot_smoothed_cell(axes, list_virt_real_cell, direction, win=5., fz=13):  # default win=5.

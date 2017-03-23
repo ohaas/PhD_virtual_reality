@@ -77,63 +77,105 @@ FR_yBins2 = 16  # for animal 10353
 # remove hkl files wich should not be used
 
 bad = numpy.array(['10353_2014-06-19_VR_GCend_linTrack1_GC_TT1_SS_07_PF_info_left',
-                   '10353_2014-06-19_VR_GCend_linTrack1_GC_TT1_SS_07_PF_info_normalised_left',
-                   '10528_2015-04-13_VR_GCend_ol_linTrack1_TT2_SS_13_PF_info_right',
-                   '10528_2015-04-13_VR_GCend_ol_linTrack1_TT2_SS_13_PF_info_normalised_right',
-                   '10528_2015-04-14_VR_GCend_Dark_linTrack1_TT3_SS_05_PF_info_right',
-                   '10528_2015-04-14_VR_GCend_Dark_linTrack1_TT3_SS_05_PF_info_normalised_right',
-                   '10528_2015-04-14_VR_GCend_Dark_linTrack1_TT3_SS_05_PF_info_left',
-                   '10528_2015-04-14_VR_GCend_Dark_linTrack1_TT3_SS_05_PF_info_normalised_left',
-                   '10823_2015-07-20_VR_GCendDark_linTrack1_TT3_SS_01_PF_info_right',
-                   '10823_2015-07-20_VR_GCendDark_linTrack1_TT3_SS_01_PF_info_normalised_right',
-                   '10823_2015-07-31_VR_GCend_linTrack1_TT4_SS_06_PF_info_right',
-                   '10823_2015-07-31_VR_GCend_linTrack1_TT4_SS_06_PF_info_normalised_right',
-                   '10823_2015-08-04_VR_GCend_linTrack1_TT2_SS_06_PF_info_right',
-                   '10823_2015-08-04_VR_GCend_linTrack1_TT2_SS_06_PF_info_normalised_right',
-                   '10823_2015-08-12_VR_GCend_linTrack1_TT4_SS_07_PF_info_left',
-                   '10823_2015-08-12_VR_GCend_linTrack1_TT4_SS_07_PF_info_normalised_left',
-                   '10823_2015-08-19_VR_GCend_linTrack1_TT2_SS_16_PF_info_left',
-                   '10823_2015-08-19_VR_GCend_linTrack1_TT2_SS_16_PF_info_normalised_left',
-                   '10823_2015-08-19_VR_GCend_linTrack1_TT3_SS_07_PF_info_right',
-                   '10823_2015-08-19_VR_GCend_linTrack1_TT3_SS_07_PF_info_normalised_right',
-                   '10823_2015-08-19_VR_GCend_linTrack1_TT3_SS_07_PF_info_left',
-                   '10823_2015-08-19_VR_GCend_linTrack1_TT3_SS_07_PF_info_normalised_left',
-                   '10823_2015-08-19_VR_GCend_linTrack1_TT3_SS_19_PF_info_right',
-                   '10823_2015-08-19_VR_GCend_linTrack1_TT3_SS_19_PF_info_normalised_right',
-                   '10823_2015-08-20_VR_GCend_linTrack1_TT4_SS_07_PF_info_left',
-                   '10823_2015-08-20_VR_GCend_linTrack1_TT4_SS_07_PF_info_normalised_left',
-                   '10529_2015-03-27_VR_linTrack1_TT8_SS_14_PF_info_right',     # rausmappened
-                   '10529_2015-03-27_VR_linTrack1_TT8_SS_14_PF_info_normalised_right',
-                   '10823_2015-07-24_VR_GCend_linTrack1_TT3_SS_04_PF_info_right',   # doppel: prop + rausmappened
-                   '10823_2015-07-24_VR_GCend_linTrack1_TT3_SS_04_PF_info_normalised_right',
-                   '10823_2015-08-18_VR_GCend_linTrack1_TT3_SS_10_PF_info_left',  # bad activity
-                   '10823_2015-08-18_VR_GCend_linTrack1_TT3_SS_10_PF_info_normalised_left',
-                   '10823_2015-08-03_VR_GCend_linTrack1_TT2_SS_04_PF_info_right',  # only active in one gain
-                   '10823_2015-08-03_VR_GCend_linTrack1_TT2_SS_04_PF_info_normalised_right',
-                   '10528_2015-03-11_VR_GCend_linTrack1_TT1_SS_01_PF_info_left',   # bad activity
-                   '10528_2015-03-11_VR_GCend_linTrack1_TT1_SS_01_PF_info_normalised_left',
-                   '10823_2015-07-27_VR_GCend_linTrack1_TT3_SS_06_PF_info_right',  # only active in one gain
-                   '10823_2015-07-27_VR_GCend_linTrack1_TT3_SS_06_PF_info_normalised_right',
-                   '10823_2015-07-27_VR_GCend_linTrack1_TT3_SS_06_PF_info_left',  # only active in one gain
-                   '10823_2015-07-27_VR_GCend_linTrack1_TT3_SS_06_PF_info_normalised_left',
-                   '10823_2015-06-30_VR_GCend_linTrack1_TT4_SS_14_PF_info_left',  # only active in one gain
-                   '10823_2015-06-30_VR_GCend_linTrack1_TT4_SS_14_PF_info_normalised_left',
-                   '10528_2015-04-21_GCend_Dark_linTrack1_TT2_SS_06_PF_info_left',  # only active in one gain
-                   '10528_2015-04-21_GCend_Dark_linTrack1_TT2_SS_06_PF_info_normalised_left',
-                   '10529_2015-03-25_VR_nami_linTrack2_TT5_SS_03_PF_info_left',     # only active in one gain
-                   '10529_2015-03-25_VR_nami_linTrack2_TT5_SS_03_PF_info_normalised_left',
-                   '10823_2015-07-03_VR_GCend_linTrack1_TT3_SS_05_PF_info_left',    # bad activity
-                   '10823_2015-07-03_VR_GCend_linTrack1_TT3_SS_05_PF_info_normalised_left',
-                   '10823_2015-07-24_VR_GCendDark_linTrack1_TT2_SS_11_PF_info_left',  # only active in one gain
-                   '10823_2015-07-24_VR_GCendDark_linTrack1_TT2_SS_11_PF_info_normalised_left',
-                   '10823_2015-08-03_VR_GCend_linTrack1_TT4_SS_01_PF_info_right',     # only active in one gain
-                   '10823_2015-08-03_VR_GCend_linTrack1_TT4_SS_01_PF_info_normalised_right',
-                   '10823_2015-08-18_VR_GCend_nami_linTrack1_TT2_SS_03_PF_info_right',  # bad activity
-                   '10823_2015-08-18_VR_GCend_nami_linTrack1_TT2_SS_03_PF_info_normalised_right',
-                   '10823_2015-08-26_VR_GCend_nami_linTrack1_TT2_SS_07_PF_info_right',  # only active in one gain
-                   '10823_2015-08-26_VR_GCend_nami_linTrack1_TT2_SS_07_PF_info_normalised_right',
-                   '10823_2015-08-27_VR_GCend_linTrack1_TT2_SS_11_PF_info_left',        # bad activity
-                   '10823_2015-08-27_VR_GCend_linTrack1_TT2_SS_11_PF_info_normalised_left'])
+                       '10353_2014-06-19_VR_GCend_linTrack1_GC_TT1_SS_07_PF_info_normalised_left',
+                       '10528_2015-04-13_VR_GCend_ol_linTrack1_TT2_SS_13_PF_info_right',
+                       '10528_2015-04-13_VR_GCend_ol_linTrack1_TT2_SS_13_PF_info_normalised_right',
+                       '10528_2015-04-14_VR_GCend_Dark_linTrack1_TT3_SS_05_PF_info_right',
+                       '10528_2015-04-14_VR_GCend_Dark_linTrack1_TT3_SS_05_PF_info_normalised_right',
+                       '10528_2015-04-14_VR_GCend_Dark_linTrack1_TT3_SS_05_PF_info_left',
+                       '10528_2015-04-14_VR_GCend_Dark_linTrack1_TT3_SS_05_PF_info_normalised_left',
+                       '10823_2015-07-20_VR_GCendDark_linTrack1_TT3_SS_01_PF_info_right',
+                       '10823_2015-07-20_VR_GCendDark_linTrack1_TT3_SS_01_PF_info_normalised_right',
+                       '10823_2015-07-31_VR_GCend_linTrack1_TT4_SS_06_PF_info_right',
+                       '10823_2015-07-31_VR_GCend_linTrack1_TT4_SS_06_PF_info_normalised_right',
+                       '10823_2015-08-04_VR_GCend_linTrack1_TT2_SS_06_PF_info_right',
+                       '10823_2015-08-04_VR_GCend_linTrack1_TT2_SS_06_PF_info_normalised_right',
+                       '10823_2015-08-12_VR_GCend_linTrack1_TT4_SS_07_PF_info_left',
+                       '10823_2015-08-12_VR_GCend_linTrack1_TT4_SS_07_PF_info_normalised_left',
+                       '10823_2015-08-19_VR_GCend_linTrack1_TT2_SS_16_PF_info_left',
+                       '10823_2015-08-19_VR_GCend_linTrack1_TT2_SS_16_PF_info_normalised_left',
+                       '10823_2015-08-19_VR_GCend_linTrack1_TT3_SS_07_PF_info_right',
+                       '10823_2015-08-19_VR_GCend_linTrack1_TT3_SS_07_PF_info_normalised_right',
+                       '10823_2015-08-19_VR_GCend_linTrack1_TT3_SS_07_PF_info_left',
+                       '10823_2015-08-19_VR_GCend_linTrack1_TT3_SS_07_PF_info_normalised_left',
+                       '10823_2015-08-19_VR_GCend_linTrack1_TT3_SS_19_PF_info_right',
+                       '10823_2015-08-19_VR_GCend_linTrack1_TT3_SS_19_PF_info_normalised_right',
+                       '10823_2015-08-20_VR_GCend_linTrack1_TT4_SS_07_PF_info_left',
+                       '10823_2015-08-20_VR_GCend_linTrack1_TT4_SS_07_PF_info_normalised_left',
+                       '10529_2015-03-27_VR_linTrack1_TT8_SS_14_PF_info_right',     # rausmappened
+                       '10529_2015-03-27_VR_linTrack1_TT8_SS_14_PF_info_normalised_right',
+                       '10823_2015-07-24_VR_GCend_linTrack1_TT3_SS_04_PF_info_right',   # doppel: prop + rausmappened
+                       '10823_2015-07-24_VR_GCend_linTrack1_TT3_SS_04_PF_info_normalised_right',
+                       '10823_2015-08-18_VR_GCend_linTrack1_TT3_SS_10_PF_info_left',  # bad activity
+                       '10823_2015-08-18_VR_GCend_linTrack1_TT3_SS_10_PF_info_normalised_left',
+                       '10823_2015-08-03_VR_GCend_linTrack1_TT2_SS_04_PF_info_right',  # only active in one gain
+                       '10823_2015-08-03_VR_GCend_linTrack1_TT2_SS_04_PF_info_normalised_right',
+                       '10528_2015-03-11_VR_GCend_linTrack1_TT1_SS_01_PF_info_left',   # bad activity
+                       '10528_2015-03-11_VR_GCend_linTrack1_TT1_SS_01_PF_info_normalised_left',
+                       '10823_2015-07-27_VR_GCend_linTrack1_TT3_SS_06_PF_info_right',  # only active in one gain
+                       '10823_2015-07-27_VR_GCend_linTrack1_TT3_SS_06_PF_info_normalised_right',
+                       '10823_2015-07-27_VR_GCend_linTrack1_TT3_SS_06_PF_info_left',  # only active in one gain
+                       '10823_2015-07-27_VR_GCend_linTrack1_TT3_SS_06_PF_info_normalised_left',
+                       '10823_2015-06-30_VR_GCend_linTrack1_TT4_SS_14_PF_info_left',  # only active in one gain
+                       '10823_2015-06-30_VR_GCend_linTrack1_TT4_SS_14_PF_info_normalised_left',
+                       '10528_2015-04-21_GCend_Dark_linTrack1_TT2_SS_06_PF_info_left',  # only active in one gain
+                       '10528_2015-04-21_GCend_Dark_linTrack1_TT2_SS_06_PF_info_normalised_left',
+                       '10529_2015-03-25_VR_nami_linTrack2_TT5_SS_03_PF_info_left',     # only active in one gain
+                       '10529_2015-03-25_VR_nami_linTrack2_TT5_SS_03_PF_info_normalised_left',
+                       '10823_2015-07-03_VR_GCend_linTrack1_TT3_SS_05_PF_info_left',    # bad activity
+                       '10823_2015-07-03_VR_GCend_linTrack1_TT3_SS_05_PF_info_normalised_left',
+                       '10823_2015-07-24_VR_GCendDark_linTrack1_TT2_SS_11_PF_info_left',  # only active in one gain
+                       '10823_2015-07-24_VR_GCendDark_linTrack1_TT2_SS_11_PF_info_normalised_left',
+                       '10823_2015-08-03_VR_GCend_linTrack1_TT4_SS_01_PF_info_right',     # only active in one gain
+                       '10823_2015-08-03_VR_GCend_linTrack1_TT4_SS_01_PF_info_normalised_right',
+                       '10823_2015-08-18_VR_GCend_nami_linTrack1_TT2_SS_03_PF_info_right',  # bad activity
+                       '10823_2015-08-18_VR_GCend_nami_linTrack1_TT2_SS_03_PF_info_normalised_right',
+                       '10823_2015-08-26_VR_GCend_nami_linTrack1_TT2_SS_07_PF_info_right',  # only active in one gain
+                       '10823_2015-08-26_VR_GCend_nami_linTrack1_TT2_SS_07_PF_info_normalised_right',
+                       '10823_2015-08-27_VR_GCend_linTrack1_TT2_SS_11_PF_info_left',        # bad activity
+                       '10823_2015-08-27_VR_GCend_linTrack1_TT2_SS_11_PF_info_normalised_left',
+                       '10529_2015-03-02_VR_GCend_abig_linTrack1_TT1_SS_13_PF_info_right',  # CA1
+                       '10529_2015-03-02_VR_GCend_abig_linTrack1_TT1_SS_13_PF_info_normalised_right',
+                       '10529_2015-03-02_VR_GCend_abig_linTrack1_TT8_SS_08_PF_info_left',   # CA1
+                       '10529_2015-03-02_VR_GCend_abig_linTrack1_TT8_SS_08_PF_info_normalised_left',
+                       '10529_2015-03-04_VR_GCend_linTrack1_TT8_SS_07_PF_info_left',   # CA1
+                       '10529_2015-03-04_VR_GCend_linTrack1_TT8_SS_07_PF_info_normalised_left',
+                       '10535_2015-09-30_VR_GCend_linTrack1_TT3_SS_10_PF_info_right',   # CA1
+                       '10535_2015-09-30_VR_GCend_linTrack1_TT3_SS_10_PF_info_normalised_right',
+                       '10535_2015-09-30_VR_GCend_linTrack1_TT3_SS_10_PF_info_left',   # CA1
+                       '10535_2015-09-30_VR_GCend_linTrack1_TT3_SS_10_PF_info_normalised_left',
+                       '10535_2015-10-06_VR_GCend_linTrack1_TT4_SS_07_PF_info_right',   # CA1
+                       '10535_2015-10-06_VR_GCend_linTrack1_TT4_SS_07_PF_info_normalised_right',
+                       '10535_2015-10-06_VR_GCend_linTrack1_TT4_SS_07_PF_info_left',   # CA1
+                       '10535_2015-10-06_VR_GCend_linTrack1_TT4_SS_07_PF_info_normalised_left',
+                       '10535_2015-10-06_VR_GCend_linTrack1_TT4_SS_12_PF_info_right',   # CA1
+                       '10535_2015-10-06_VR_GCend_linTrack1_TT4_SS_12_PF_info_normalised_right',
+                       '10535_2015-10-06_VR_GCend_linTrack1_TT4_SS_12_PF_info_left',   # CA1
+                       '10535_2015-10-06_VR_GCend_linTrack1_TT4_SS_12_PF_info_normalised_left',
+                       '10537_2015-10-07_VR_GCend_linTrack1_TT8_SS_13_PF_info_right',   # CA1
+                       '10537_2015-10-07_VR_GCend_linTrack1_TT8_SS_13_PF_info_normalised_right',
+                       '10537_2015-10-07_VR_GCend_linTrack1_TT8_SS_13_PF_info_left',   # CA1
+                       '10537_2015-10-07_VR_GCend_linTrack1_TT8_SS_13_PF_info_normalised_left',
+                       '10537_2015-10-16_VR_GCend_linTrack1_TT1_SS_01_PF_info_right',   # CA1
+                       '10537_2015-10-16_VR_GCend_linTrack1_TT1_SS_01_PF_info_normalised_right',
+                       '10537_2015-10-16_VR_GCend_linTrack1_TT1_SS_01_PF_info_left',   # CA1
+                       '10537_2015-10-16_VR_GCend_linTrack1_TT1_SS_01_PF_info_normalised_left',
+                       '10537_2015-10-16_VR_GCend_linTrack1_TT6_SS_08_PF_info_right',   # CA1
+                       '10537_2015-10-16_VR_GCend_linTrack1_TT6_SS_08_PF_info_normalised_right',
+                       '10537_2015-10-16_VR_GCend_linTrack1_TT6_SS_08_PF_info_left',   # CA1
+                       '10537_2015-10-16_VR_GCend_linTrack1_TT6_SS_08_PF_info_normalised_left',
+                       '10537_2015-10-20_VR_GCend_linTrack1_TT8_SS_08_PF_info_right',   # CA1
+                       '10537_2015-10-20_VR_GCend_linTrack1_TT8_SS_08_PF_info_normalised_right',
+                       '10537_2015-10-20_VR_GCend_linTrack1_TT8_SS_08_PF_info_left',   # CA1
+                       '10537_2015-10-20_VR_GCend_linTrack1_TT8_SS_08_PF_info_normalised_left',
+                       '10537_2015-10-22_VR_GCend_linTrack1_TT1_SS_09_PF_info_right',   # CA1
+                       '10537_2015-10-22_VR_GCend_linTrack1_TT1_SS_09_PF_info_normalised_right',
+                       '10537_2015-10-22_VR_GCend_linTrack1_TT1_SS_09_PF_info_left',   # CA1
+                       '10537_2015-10-22_VR_GCend_linTrack1_TT1_SS_09_PF_info_normalised_left',
+                       '10537_2015-10-22_VR_GCend_linTrack1_TT5_SS_01_PF_info_right',   # CA1
+                       '10537_2015-10-22_VR_GCend_linTrack1_TT5_SS_01_PF_info_normalised_right',
+                       '10537_2015-10-22_VR_GCend_linTrack1_TT5_SS_08_PF_info_left',   # CA1
+                       '10537_2015-10-22_VR_GCend_linTrack1_TT5_SS_08_PF_info_normalised_left'])
 
 if recalc_summary_dict == 'on':
     all_titles = ['Gain normalised / According to the proprioceptive pattern', 'According to the visual pattern']
